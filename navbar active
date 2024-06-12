@@ -1,0 +1,89 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(CoffeeShopApp());
+}
+
+class CoffeeShopApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Coffee Shop',
+      theme: ThemeData(
+        primarySwatch: Colors.brown,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Coffee Shop'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Welcome to Coffee Shop!',
+              style: TextStyle(fontSize: 24.0),
+            ),
+            SizedBox(height: 20.0),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MenuPage()),
+                );
+              },
+              child: Text('View Menu'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+
+class MenuPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Menu'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      body: ListView(
+        children: <Widget>[
+          ListTile(
+            title: Text('Coffee'),
+            subtitle: Text('Delicious coffee drinks'),
+            onTap: () {
+              // Navigate to coffee items page
+            },
+          ),
+          ListTile(
+            title: Text('Tea'),
+            subtitle: Text('Refreshing tea drinks'),
+            onTap: () {
+              // Navigate to tea items page
+            },
+          ),
+          // Add more list tiles for other categories
+        ],
+      ),
+    );
+  }
+}
