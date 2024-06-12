@@ -1,0 +1,160 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(CoffeeShopApp());
+}
+
+class CoffeeShopApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Coffee Shop',
+      theme: ThemeData(
+        primarySwatch: Colors.brown,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: HomeScreen(),
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Coffee Shop'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Welcome to latte lounge!!',
+              style: TextStyle(fontSize: 24.0),
+            ),
+            SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProductListScreen()),
+                );
+              },
+              child: Text('Explore Products'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ProductListScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Products'),
+      ),
+      body: ListView.builder(
+        itemCount: products.length,
+        itemBuilder: (context, index) {
+          final product = products[index];
+          return ListTile(
+            leading: Image.asset(
+              product.imagePath,
+              width: 80,
+              height: 80,
+              fit: BoxFit.cover,
+            ),
+            title: Text(product.name),
+            subtitle: Text(product.description),
+            trailing: Text('\$${product.price.toStringAsFixed(2)}'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProductDetailScreen(product)),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+class ProductDetailScreen extends StatelessWidget {
+  final Product product;
+
+  ProductDetailScreen(this.product);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(product.name),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image.asset(
+              product.imagePath,
+              width: 200,
+              height: 200,
+              fit: BoxFit.cover,
+            ),
+            SizedBox(height: 20.0),
+            Text(
+              product.name,
+              style: TextStyle(fontSize: 24.0),
+            ),
+            SizedBox(height: 10.0),
+            Text(
+              product.description,
+              style: TextStyle(fontSize: 16.0),
+            ),
+            SizedBox(height: 10.0),
+            Text(
+              '\$${product.price.toStringAsFixed(2)}',
+              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: () {
+                // Implement add to cart functionality
+              },
+              child: Text('Add to Cart'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Product {
+  final String name;
+  final String description;
+  final double price;
+  final String imagePath;
+
+  Product({required this.name, required this.description, required this.price, required this.imagePath});
+}
+
+List<Product> products = [
+  Product(
+    name: 'Espresso',
+    description: 'Strong coffee',
+    price: 2.99,
+    imagePath: 'images/coff.jpg',
+  ),
+  Product(
+    name: 'Cappuccino',
+    description: 'Coffee with milk and foam',
+    price: 3.49,
+    imagePath: 'images/cf.jpeg',
+  ),
+  // Add more products here
+];
